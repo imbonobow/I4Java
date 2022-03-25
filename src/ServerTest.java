@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.TimeUnit;
 
 public class ServerTest {
 
@@ -25,18 +26,22 @@ public class ServerTest {
 				System.out.println("Accepted connection : " + sock);
 				DataInputStream dis = new DataInputStream(new BufferedInputStream(sock.getInputStream()));
 				DataOutputStream dos = new DataOutputStream(sock.getOutputStream());
-				DataInputStream his = new DataInputStream(System.in);
 				while (true)
 				{
 					String line = dis.readUTF();
-					System.out.println(line);
 					System.out.println("Client : " + line);
 
 					if (line.equals("/transfert"))
 					{
+
 						// send file
 						File myFile = new File(FILE_TO_SEND);
 						byte[] mybytearray = new byte[(int) myFile.length()];
+
+						//envoi de la taille du fichier
+						dos.writeUTF(FILE_TO_SEND);
+						dos.writeLong(mybytearray.length);
+
 						fis = new FileInputStream(myFile);
 						bis = new BufferedInputStream(fis);
 						bis.read(mybytearray, 0, mybytearray.length);
@@ -45,8 +50,6 @@ public class ServerTest {
 						os.write(mybytearray, 0, mybytearray.length);
 						os.flush();
 						System.out.println("Done.");
-						break;
-
 					}
 				}
 			}

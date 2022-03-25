@@ -24,6 +24,7 @@ public class Client {
 			sock = new Socket(SERVER, SOCKET_PORT);
 			System.out.println("Connecting...");
 			DataOutputStream dos = new DataOutputStream(sock.getOutputStream());
+			DataInputStream his = new DataInputStream(new BufferedInputStream(sock.getInputStream()));
 			DataInputStream dis = new DataInputStream(System.in);
 
 			while (true)
@@ -33,8 +34,6 @@ public class Client {
 				dos.flush();
 				if (line.equals("/transfert"))
 				{
-					System.out.println("Je suis rentré dans la condition");
-
 					// receive file
 					byte[] mybytearray = new byte[FILE_SIZE];
 					InputStream is = sock.getInputStream();
@@ -47,25 +46,30 @@ public class Client {
 					}
 					*/
 
+					String nomfichier = his.readUTF();
+					long taillefichier = his.readLong();
+
+					System.out.println("Server : " + nomfichier + "& Taille = " + taillefichier);
+
+
+					int n = 0;
 
 					fos = new FileOutputStream(FILE_TO_RECEIVED);
 					bos = new BufferedOutputStream(fos);
+
 					bytesRead = is.read(mybytearray, 0, mybytearray.length);
 					current = bytesRead;
-					System.out.println("Juste avant la boucle");
 					do
 					{
 						bytesRead = is.read(mybytearray, current, (mybytearray.length - current));
 						if (bytesRead >= 0) {
 							current += bytesRead;
 						}
-						System.out.println(bytesRead);
-					}while (bytesRead > 0);
-
+					}while (current != taillefichier);
 					bos.write(mybytearray, 0, current);
 					bos.flush();
-					System.out.println("File " + FILE_TO_RECEIVED
-							+ " downloaded (" + current + " bytes read)");
+					fos.close();
+					System.out.println("File " + FILE_TO_RECEIVED + " downloaded (" + current + " bytes read)");
 				}
 			}
 		}
