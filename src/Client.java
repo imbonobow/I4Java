@@ -60,14 +60,34 @@ public class Client {
 
 					//Ici je parse le fichier à télécharger : Path, nom du fichier, extension du fichier
 					File f = new File(nomfichier);
+					System.out.println("F : "+f);
+					//path du fichier parent
 					System.out.println("Path-->" + f.getParent());
+					//nom du fichier
 					System.out.println("file--->" + f.getName());
+					//extension
 					int idx = f.getName().lastIndexOf('.');
 					System.out.println("extension--->" + ((idx > 0) ? f.getName().substring(idx) : "") );
+					//File without extension
+					String fileNameWithOutExt = f.getName().replaceFirst("[.][^.]+$", "");
+					System.out.println(fileNameWithOutExt);
 
 					//Endroit ou je te télécharge le fichier (racine + nom du fichier)
 					FILE_TO_RECEIVED=FILE_TO_RECEIVED+f.getName();
 					System.out.println("File_To_receive : "+FILE_TO_RECEIVED);
+
+					//Si le nom du fichier existe déja alors je rajoute .1
+					File z = new File(FILE_TO_RECEIVED);
+					System.out.println("Z : "+z);
+					while(z.exists() && !z.isDirectory()) {
+						System.out.println("Le fichier existe déja");
+						numfile++;
+						System.out.println(numfile);
+						FILE_TO_RECEIVED = fileNameWithOutExt+"."+numfile+f.getName().substring(idx);
+						z = new File(FILE_TO_RECEIVED);
+					}
+
+					FILE_TO_RECEIVED=FILE_TO_RECEIVED_INIT+FILE_TO_RECEIVED;
 
 					fos = new FileOutputStream(FILE_TO_RECEIVED);
 					bos = new BufferedOutputStream(fos);
