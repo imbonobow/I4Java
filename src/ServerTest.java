@@ -6,8 +6,8 @@ import java.util.concurrent.TimeUnit;
 public class ServerTest {
 
 	public final static int SOCKET_PORT = 13267;  // you may change this
-	public final static String FILE_TO_SEND = "/Users/Mathis/Desktop/E4ESIEE/FiwARE/IntroductionFiWare_v19.1.pdf";  // you may change this
-
+	//public final static String FILE_TO_SEND = "/Users/Mathis/I4Racine/Test/yayy.txt";  // you may change this
+	public final static String FILE_TO_SEND = "/Users/Mathis/Desktop/E4ESIEE/FiwARE/IntroductionFiWare_v19.1.pdf";
 	public static void main (String [] args ) throws IOException {
 		FileInputStream fis = null;
 		BufferedInputStream bis = null;
