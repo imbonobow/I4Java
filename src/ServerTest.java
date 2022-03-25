@@ -1,13 +1,16 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class ServerTest {
 
 	public final static int SOCKET_PORT = 13267;  // you may change this
 	//public final static String FILE_TO_SEND = "/Users/Mathis/I4Racine/Test/yayy.txt";  // you may change this
-	public final static String FILE_TO_SEND = "/Users/Mathis/Desktop/E4ESIEE/FiwARE/IntroductionFiWare_v19.1.pdf";
+	//public final static String FILE_TO_SEND = "/Users/Mathis/Desktop/E4ESIEE/FiwARE/IntroductionFiWare_v19.1.pdf";
+	public final static String FOLDER = "/Users/Mathis/I4Racine/";
+	public final static String FILE_TO_SEND = "/Users/Mathis/I4Racine/";
 	public static void main (String [] args ) throws IOException {
 		FileInputStream fis = null;
 		BufferedInputStream bis = null;
@@ -15,6 +18,7 @@ public class ServerTest {
 		ServerSocket servsock = null;
 		Socket sock = null;
 		String confirmation = "Ended";
+
 		try
 		{
 			servsock = new ServerSocket(SOCKET_PORT);

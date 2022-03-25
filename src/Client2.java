@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 
 
-public class Client {
+public class Client2 {
 
 	public final static int SOCKET_PORT = 13267;      // you may change this
 	public final static String SERVER = "127.0.0.1";  // localhost
